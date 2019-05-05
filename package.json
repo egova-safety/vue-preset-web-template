@@ -10,7 +10,7 @@
         "template:clear": "node build/template.clear.js",
         "template:build": "node build/template.build.js",
         "template:deploy": "cd .template && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/egova-safety/vue-preset-web-template.git master:master",
-        "template": "npm run template:clear && npm run template:build",
+        "template": "npm run template:clear && npm run template:build && npm run template:deploy",
         "dll": "vue-cli-service dll"
     },
     "dependencies": {
