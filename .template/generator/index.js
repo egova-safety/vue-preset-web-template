@@ -39,6 +39,8 @@ module.exports = (api, opts) => {
       build: "vue-cli-service build",
       lint: "vue-cli-service lint",
       "build:serve": "http-server ./dist -a 127.0.0.1 -p 5050",
+      "template:deploy":
+        "cd .template && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/egova-safety/vue-preset-web-template.git master:master",
       dll: "vue-cli-service dll"
     }
   })

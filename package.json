@@ -9,6 +9,7 @@
         "build:serve": "http-server ./dist -a 127.0.0.1 -p 5050",
         "template:clear": "node build/template.clear.js",
         "template:build": "node build/template.build.js",
+        "template:deploy": "cd .template && git init && git add -A && git commit -m 'deploy' && git push -f https://github.com/egova-safety/vue-preset-web-template.git master:master",
         "template": "npm run template:clear && npm run template:build",
         "dll": "vue-cli-service dll"
     },
