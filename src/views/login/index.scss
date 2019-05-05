@@ -1,0 +1,36 @@
+.v-login{
+    &-content
+    {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: 320px;
+        height: 200px;
+        transform: translate(-50%,-50%);
+
+        &-title
+        {
+            text-align: center;
+            font-size: 30px;
+            font-weight: 700;
+            color: #2d8cf0;
+            height: 50px;
+            line-height: 50px;
+            margin-top: 10px;
+        }
+        
+        &-form
+        {
+            display: block;
+            text-align: center;
+            letter-spacing: 4px;
+            color: #dddde2;
+
+            .login-btn{
+                width: 180px;
+                margin-top: 10px;
+            }
+        }
+    }
+ 
+}

@@ -1,0 +1,29 @@
+{
+    "name": "#{pluginName}",
+    "version": "#{version}",
+    "description": "vue preset web template plugin for vue-cli ^3.0.0~",
+    "main": "index.js",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/egova-safety/#{pluginName}.git"
+    },
+    "keywords": [
+        "vue",
+        "cli",
+        "flagwind",
+        "iview",
+        "egova"
+    ],
+    "author": "chendebao <chendebao1985@163.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/egova-safety/#{pluginName}/issues"
+    },
+    "homepage": "https://github.com/egova-safety/#{pluginName}#readme",
+    "publishConfig": {
+        "access": "public"
+    },
+    "dependencies": {
+        "fs-extra": "^7.0.1"
+    }
+}
