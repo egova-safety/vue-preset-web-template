@@ -36,6 +36,6 @@ $ npm run dll
     - vue
     - vue-router
 - flagwind
-    - flagwind-core
+    - @egova/flagwind-core
     - @egova/flagwind-web
     - @egova/flagwind-echarts
