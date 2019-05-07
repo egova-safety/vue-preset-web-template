@@ -4,8 +4,8 @@
         "tslint-config-flagwind"
     ],
     "rules":{
-        "no-implicit-dependencies":[true,["flagwind-web","flagwind-echarts","@"]],
-        "no-submodule-imports":[true,"@egova/flagwind-web","@egova/flagwind-echarts","@"],
+        "no-implicit-dependencies":[true,["flagwind-core","flagwind-web","flagwind-echarts","@"]],
+        "no-submodule-imports":[true,"@egova/flagwind-core","@egova/flagwind-web","@egova/flagwind-echarts","@"],
         "interface-name":false,
         "eofline":false
     }

@@ -29,7 +29,7 @@ export default class Login extends View {
                 return;
             }
             try {
-                this.$router.push({ name: "main" });
+                this.$router.push({ name: "welcome" });
             } catch (error) {
                 this.$notice.error({ title: "调用服务异常" });
             }

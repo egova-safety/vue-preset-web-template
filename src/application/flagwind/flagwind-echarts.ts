@@ -1,1 +1,1 @@
-export { default } from "@egova/flagwind-echarts";
+export { default } from "@egova/flagwind-echarts/dist/types/echarts";

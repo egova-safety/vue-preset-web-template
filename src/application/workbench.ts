@@ -14,6 +14,9 @@ import Vuex from "vuex";
 // 导入系统组件
 import components from "flagwind-web";
 
+import "@egova/flagwind-web/dist/flagwind-web.css";
+import "@/assets/styles/index.scss";
+
 /**
  * 提供工作台的基本封装。
  * @class
@@ -92,6 +95,7 @@ export default class Workbench extends WorkbenchBase {
    * @returns void
    */
   private initializeComponent(context: ApplicationContext): void {
+      console.log(require("@egova/flagwind-web"));
     // 注册系统组件
     Vue.use(components);
   }

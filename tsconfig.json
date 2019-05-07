@@ -16,6 +16,9 @@
         ],
         "paths": {
             "*": ["types/*"],
+            "flagwind-core": [
+                "src/application/flagwind/flagwind-core.ts"
+            ],
             "flagwind-web": [
                 "src/application/flagwind/flagwind-web.ts"
             ],

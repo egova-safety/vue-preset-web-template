@@ -5,9 +5,11 @@ delete pkg.dependencies["vue"];
 delete pkg.dependencies["vue-router"];
 delete pkg.dependencies["vuex"];
 
-delete pkg.dependencies["flagwind-core"];
+delete pkg.dependencies["@egova/flagwind-core"];
 delete pkg.dependencies["@egova/flagwind-web"];
 delete pkg.dependencies["@egova/flagwind-echarts"];
+delete pkg.dependencies["equals"];
+delete pkg.dependencies["lodash.debounce"];
 delete pkg.dependencies["vue-class-component"];
 delete pkg.dependencies["vue-property-decorator"];
 delete pkg.dependencies["iview"];
@@ -46,8 +48,9 @@ module.exports = {
         });
 
         config.resolve.alias
-            .set('flagwind-web', "@egova/flagwind-web/dist/flagwind-web.js")
-            .set('flagwind-echarts', "@egova/flagwind-echarts/dist/flagwind-echarts.js")
+            .set('flagwind-core', "@egova/flagwind-core/dist/flagwind.js")
+            .set('flagwind-web', "@egova/flagwind-web/dist/flagwind-web.umd.js")
+            .set('flagwind-echarts', "@egova/flagwind-echarts/dist/flagwind-echarts.umd.js")
             .set('@', path.join(__dirname, 'src'))
 
         // 修改插件配置
@@ -110,7 +113,7 @@ module.exports = {
                     "vuex/dist/vuex.esm.js",
                 ],
                 flagwind: [
-                    "flagwind-core",
+                    "@egova/flagwind-core",
                     "@egova/flagwind-web",
                     "@egova/flagwind-echarts"
                 ],
