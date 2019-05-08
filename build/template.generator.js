@@ -21,7 +21,7 @@ module.exports = function generatorIndexJS(pkg) {
             }
             return newFile
         });
-
+        fs.copySync('./types', `./.template/generator/template/types`);
         fs.copySync('./public', `./.template/generator/template/public`);
         tools.copyFile('./public/index.html', `./.template/generator/template/public/index.html`, (data) => {
             data = tools.replaceAll("%", "%%", data);

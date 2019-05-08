@@ -16,6 +16,7 @@ import components from "flagwind-web";
 
 import "@egova/flagwind-web/dist/flagwind-web.css";
 import "@/assets/styles/index.scss";
+import { EventBusMixin } from "./broadcast";
 
 /**
  * 提供工作台的基本封装。
@@ -61,8 +62,7 @@ export default class Workbench extends WorkbenchBase {
     // };
 
     // 挂载全局事件
-    const eventBus = new Vue();
-    Vue.prototype.$bus = eventBus;
+    Vue.mixin(EventBusMixin);
 
     // 初始化组件
     this.initializeComponent(context);
