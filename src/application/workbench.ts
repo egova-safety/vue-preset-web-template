@@ -24,122 +24,122 @@ import { EventBusMixin } from "./broadcast";
  * @version 1.0.0
  */
 export default class Workbench extends WorkbenchBase {
-  private _workspace: Workspace | undefined;
+    private _workspace: Workspace | undefined;
 
-  /**
-   * 获取当前应用的主工作空间。
-   * @property
-   * @returns Workspace
-   */
-  public get workspace(): Workspace | undefined {
-    return this._workspace;
-  }
+    /**
+     * 获取当前应用的主工作空间。
+     * @property
+     * @returns Workspace
+     */
+    public get workspace(): Workspace | undefined {
+        return this._workspace;
+    }
 
-  /**
-   * 初始化工作台的新实例。
-   * @param  {ApplicationContextBase} applicationContext
-   */
-  public constructor(context: ApplicationContextBase) {
-    super(context);
-  }
+    /**
+     * 初始化工作台的新实例。
+     * @param  {ApplicationContextBase} applicationContext
+     */
+    public constructor(context: ApplicationContextBase) {
+        super(context);
+    }
 
-  /**
-   * 当工作台打开时调用。
-   * @async
-   * @protected
-   * @virtual
-   * @param  {Array<string>} args
-   * @returns void
-   */
-  protected async onOpen(args: Array<string>): Promise<void> {
-    let context = this.applicationContext as ApplicationContext;
+    /**
+     * 当工作台打开时调用。
+     * @async
+     * @protected
+     * @virtual
+     * @param  {Array<string>} args
+     * @returns void
+     */
+    protected async onOpen(args: Array<string>): Promise<void> {
+        let context = this.applicationContext as ApplicationContext;
 
-    // 关闭生产提示
-    // Vue.config.productionTip = false;
-    // Vue.config.errorHandler = (err, vm, info) => {
-    //   console.error(err);
-    //   console.warn(info);
-    // };
+        // 关闭生产提示
+        // Vue.config.productionTip = false;
+        // Vue.config.errorHandler = (err, vm, info) => {
+        //   console.error(err);
+        //   console.warn(info);
+        // };
 
-    // 挂载全局事件
-    Vue.mixin(EventBusMixin);
+        // 挂载全局事件
+        Vue.mixin(EventBusMixin);
 
-    // 初始化组件
-    this.initializeComponent(context);
+        // 初始化组件
+        this.initializeComponent(context);
 
-    // 初始化路由程序
-    this.initializeRouter(context);
+        // 初始化路由程序
+        this.initializeRouter(context);
 
-    // 初始化状态管理程序
-    this.initializeStore(context);
+        // 初始化状态管理程序
+        this.initializeStore(context);
 
-    // 初始化自定义指令
-    this.initializeDirective(context);
+        // 初始化自定义指令
+        this.initializeDirective(context);
 
-    // 初始化工作空间
-    this._workspace = this.createWorkspace();
-  }
+        // 初始化工作空间
+        this._workspace = this.createWorkspace();
+    }
 
-  /**
-   * 创建一个工作空间对象。
-   * @override
-   * @returns IWorkspace
-   */
-  protected createWorkspace(): Workspace {
-    return new Workspace(this);
-  }
+    /**
+     * 创建一个工作空间对象。
+     * @override
+     * @returns IWorkspace
+     */
+    protected createWorkspace(): Workspace {
+        return new Workspace(this);
+    }
 
-  /**
-   * 初始化全局组件。
-   * @param  {ApplicationContext} context 应用程序上下文实例。
-   * @returns void
-   */
-  private initializeComponent(context: ApplicationContext): void {
-      console.log(require("@egova/flagwind-web"));
-    // 注册系统组件
-    Vue.use(components);
-  }
+    /**
+     * 初始化全局组件。
+     * @param  {ApplicationContext} context 应用程序上下文实例。
+     * @returns void
+     */
+    private initializeComponent(context: ApplicationContext): void {
+        console.log(require("@egova/flagwind-web"));
+        // 注册系统组件
+        Vue.use(components);
+    }
 
-  /**
-   * 初始化路由程序。
-   * @param  {ApplicationContext} context 应用程序上下文实例。
-   * @returns void
-   */
-  private initializeRouter(context: ApplicationContext): void {
-    // 注册路由组件
-    Vue.use(Router);
+    /**
+     * 初始化路由程序。
+     * @param  {ApplicationContext} context 应用程序上下文实例。
+     * @returns void
+     */
+    private initializeRouter(context: ApplicationContext): void {
+        // 注册路由组件
+        Vue.use(Router);
 
-    // 初始化路由程序
-    let router = new Router({ routes });
+        // 初始化路由程序
+        let router = new Router({ routes });
 
-    // 设置路由程序
-    context.router = router;
-  }
+        // 设置路由程序
+        context.router = router;
+    }
 
-  /**
-   * 初始化状态管理程序。
-   * @param  {ApplicationContext} context 应用程序上下文实例。
-   * @returns void
-   */
-  private initializeStore(context: ApplicationContext): void {
-    // 注册状态管理程序
-    Vue.use(Vuex);
+    /**
+     * 初始化状态管理程序。
+     * @param  {ApplicationContext} context 应用程序上下文实例。
+     * @returns void
+     */
+    private initializeStore(context: ApplicationContext): void {
+        // 注册状态管理程序
+        Vue.use(Vuex);
 
-    // 初始化状态容器
-    let store = new Vuex.Store({
-      modules
-    });
+        // 初始化状态容器
+        let store = new Vuex.Store({
+            modules
+        });
 
-    // 设置状态容器
-    context.store = store;
-  }
+        // 设置状态容器
+        context.store = store;
+    }
 
-  /**
-   * 初始化自定义指令。
-   * @param  {ApplicationContext} context 应用程序上下文实例。
-   * @returns void
-   */
-  private initializeDirective(context: ApplicationContext): void {
-    // Vue.use(directives);
-  }
+    /**
+     * 初始化自定义指令。
+     * @param  {ApplicationContext} context 应用程序上下文实例。
+     * @returns void
+     */
+    private initializeDirective(context: ApplicationContext): void {
+        // Vue.use(directives);
+    }
 }

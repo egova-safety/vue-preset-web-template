@@ -3,8 +3,6 @@ import flagwind from "flagwind-core";
 import Vue from "vue";
 import { component } from "flagwind-web";
 
-
-
 export class EventBus extends flagwind.BroadcastManager {
     public id: string;
     public constructor(id: string) {
