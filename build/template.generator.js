@@ -34,7 +34,7 @@ module.exports = function generatorIndexJS(pkg) {
 
         tools.copyFile('./vue.config.js', `./.template/generator/template/vue.config.js`);
 
-        tools.copyFile('./.env.local', `./.template/generator/template/.env.local`);
+        tools.copyFile('./.env', `./.template/generator/template/.env`);
 
         tools.copyFile('./.editorconfig', `./.template/generator/template/.editorconfig`);
 
