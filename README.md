@@ -38,7 +38,7 @@
 
 ## 多页面如何设置
 
-在项目根目录下有.env.local配置文件，`.env.local`内容如下：
+在项目根目录下有.env`.env`内容如下：
 
 ```text
 PAGE_MODE=page1
