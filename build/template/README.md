@@ -85,3 +85,7 @@ npm run dll
     - @egova/flagwind-core
     - @egova/flagwind-web
     - @egova/flagwind-echarts
+
+## 更新说明
+
+- **2020-02-21**前端iview升级为最新的`view-design`4.x版本，因为iview项目更名了，所以以前`import iview from "iview"`的代码会报错，需要手动把`iview`换成`view-design`.
