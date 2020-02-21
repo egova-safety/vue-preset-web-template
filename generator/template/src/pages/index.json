@@ -1,0 +1,26 @@
+{
+    "page1": {
+        "name": "page1",
+        "entry": "src/pages/page1/main.ts",
+        "template": "public/index.html",
+        "filename": "page1.html",
+        "title": "page1",
+        "chunks": ["chunk-vendors", "chunk-common", "page1"]
+    },
+    "page2": {
+        "name": "page2",
+        "entry": "src/pages/page2/main.ts",
+        "template": "public/index.html",
+        "filename": "page2.html",
+        "title": "page2",
+        "chunks": ["chunk-vendors", "chunk-common", "page2"]
+    },
+    "index":{
+        "name": "index",
+        "entry": "src/pages/index/main.ts",
+        "template": "public/index.html",
+        "filename": "index.html",
+        "title": "index",
+        "chunks": ["chunk-vendors", "chunk-common", "index"]
+    }
+}

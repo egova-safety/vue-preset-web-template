@@ -1,0 +1,32 @@
+<div class="v-login" @keydown.enter="onLogin">
+    <div class="v-login-content">
+        <i-card>
+            <div class="v-login-content-title"> 系统登录</div>
+            <div class="v-login-content-form">
+                <i-form ref="loginForm" :model="form" :rules="rules">
+                    <i-form-item prop="userName">
+                        <i-input v-model="form.userName" placeholder="请输入用户名">
+                            <span slot="prepend">
+                                用户
+                            </span>
+                        </i-input>
+                    </i-form-item>
+                    <i-form-item prop="password">
+                        <i-input type="password" v-model="form.password" placeholder="请输入密码">
+                            <span slot="prepend">
+                                密码
+                            </span>
+                        </i-input>
+                    </i-form-item>
+                    <div class="tool-bar">
+                        <i-checkbox v-model="remember">记住账号</i-checkbox>
+                        <a>忘记密码</a>
+                    </div>
+                    <i-form-item>
+                        <i-button @click="onLogin" class="login-btn" type="primary">登录</i-button>
+                    </i-form-item>
+                </i-form>
+            </div>
+        </i-card>
+    </div>
+</div>
