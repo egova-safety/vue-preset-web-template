@@ -1,6 +1,6 @@
 import Vue, { DirectiveOptions } from "vue";
-import Router from "vue-router";
-import Vuex, { Store } from "vuex";
+import Router, { RouterOptions } from "vue-router";
+import Vuex, { Store, StoreOptions } from "vuex";
 import flagwind from "flagwind-core";
 import Workbench from "@/application/workbench";
 import IWorkbench = flagwind.IWorkbench;
@@ -12,11 +12,17 @@ import InvalidOperationException = flagwind.InvalidOperationException;
  * @class
  * @version 1.0.0
  */
+/**
+ * 包含当前应用程序的上下文实例。
+ * @class
+ * @version 1.0.0
+ */
 export default class ApplicationContext extends ApplicationContextBase {
     private _router: Router | undefined;
     private _store: Store<any> | undefined;
-    private _directives: DirectiveOptions | undefined;
-
+    private _directives!: DirectiveOptions;
+    public routerOptions: RouterOptions;
+    public storeOptions: StoreOptions<any>;
     /**
      * 获取或设置当前应用的主路由对象。
      * @property
@@ -32,6 +38,18 @@ export default class ApplicationContext extends ApplicationContextBase {
         }
 
         this._router = value;
+    }
+
+    public get directives(): DirectiveOptions {
+        return this._directives;
+    }
+
+    public set directives(value: DirectiveOptions) {
+        if (!value) {
+            throw new InvalidOperationException();
+        }
+
+        this._directives = value;
     }
 
     /**
@@ -56,14 +74,16 @@ export default class ApplicationContext extends ApplicationContextBase {
      * @static
      * @member
      */
-    public static readonly current: ApplicationContext = new ApplicationContext();
+    // public static readonly current: ApplicationContext = new ApplicationContext();
 
     /**
      * 私有构造函数。
      * @private
      */
-    protected constructor() {
+    public constructor(routes: any, modules: any) {
         super("egova-web-demo");
+        this.routerOptions = { routes: routes };
+        this.storeOptions = { modules: modules };
     }
 
     /**

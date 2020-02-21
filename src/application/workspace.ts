@@ -1,8 +1,9 @@
 import Vue from "vue";
 
-import flagwind from "flagwind-core";
+import flagwind from "@egova/flagwind-core";
 import IWorkbench = flagwind.IWorkbench;
 import ApplicationContext from "@/application/context";
+import { Workbench } from ".";
 
 /**
  * 提供工作空间的常用功能。
@@ -20,19 +21,20 @@ export default class Workspace extends Vue {
     public get workbench(): IWorkbench {
         return this._workbench;
     }
-
+    public get applicationContext(): ApplicationContext {
+        return (<any>this.workbench).applicationContext as ApplicationContext;
+    }
     /**
      * 初始化工作空间的新实例。
      * @constructor
      * @param  {IWorkbench} workbench 工作台实例。
      * @param  {Router} router 主路由程序。
      */
-    public constructor(workbench: IWorkbench) {
-        let options =
-        {
+    public constructor(workbench: Workbench) {
+        let options = {
             el: "#app",
-            router: ApplicationContext.current.router,
-            store: ApplicationContext.current.store,
+            router: (workbench.applicationContext as ApplicationContext).router,
+            store: (workbench.applicationContext as ApplicationContext).store,
             template: '<div id="app"><router-view /></div>'
         };
 

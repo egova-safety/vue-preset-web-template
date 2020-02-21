@@ -20,7 +20,7 @@ class Demo {
 @component({template: require("./index.html")})
 export default class SubscribeView extends View {
 
-    @receivable("catalog://refresh-tree", { isGlobal: false, priority: 1 })
+    @receivable("catalog://refresh-tree", { scope: "parent", priority: 1 })
     public subscribe(map?: flagwind.Map<string, any>) {
         // todo:
         console.log(map.get("id"));

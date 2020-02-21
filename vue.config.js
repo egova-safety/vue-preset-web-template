@@ -12,8 +12,48 @@ delete pkg.dependencies["equals"];
 delete pkg.dependencies["lodash.debounce"];
 delete pkg.dependencies["vue-class-component"];
 delete pkg.dependencies["vue-property-decorator"];
-delete pkg.dependencies["iview"];
+delete pkg.dependencies["view-design"];
 delete pkg.dependencies["echarts"];
+
+
+
+const getPages = () => {
+    let pages = undefined;
+    if (!process.env.PAGE_MODE) {
+        return pages;
+    }
+    if (!process.env.PAGE_JSON) {
+        return pages;
+    }
+
+    pages = require(path.resolve(process.env.PAGE_JSON));
+    if (process.env.PAGE_MODE !== "all") {
+
+        let v = pages[process.env.PAGE_MODE];
+        if (!v) {
+            return pages;
+        }
+        pages = {
+            index: {
+                ...v, ...{
+                    name: "index",
+                    filename: "index.html",
+                    chunks: ["chunk-vendors", "chunk-common", "index"]
+                }
+            }
+        };
+    }
+
+    return pages;
+};
+
+let pages = getPages();
+
+if (pages) {
+    console.log("********多页面配置信息********");
+    console.log(pages);
+    console.log("***************************");
+}
 
 module.exports = {
     //基本路径
@@ -25,7 +65,7 @@ module.exports = {
     //放置生成的静态资源 (js、css、img、fonts) 的 (相对于 outputDir 的) 目录。
     assetsDir: 'static',
     //以多页模式构建应用程序。
-    pages: undefined,
+    pages: pages,
     //是否使用包含运行时编译器的 Vue 构建版本
     runtimeCompiler: true,
     //是否为 Babel 或 TypeScript 使用 thread-loader。该选项在系统的 CPU 有多于一个内核时自动启用，仅作用于生产构建，在适当的时候开启几个子进程去并发的执行压缩
@@ -35,7 +75,6 @@ module.exports = {
     // webpack配置
     //对内部的 webpack 配置进行更细粒度的修改 https://github.com/neutrinojs/webpack-chain see https://github.com/vuejs/vue-cli/blob/dev/docs/webpack.md
     chainWebpack: config => {
-
 
         // 以便支持 @component({ template: require("./index.html") }) 这种模版加载方式
         // 注意：写include和exclude要在use和loader之前写
@@ -53,14 +92,27 @@ module.exports = {
             .set('flagwind-echarts', "@egova/flagwind-echarts/dist/flagwind-echarts.umd.js")
             .set('@', path.join(__dirname, 'src'))
 
+
         // 修改插件配置
-        config.plugin('html').tap(args => {
-            args[0].minify = {
-                removeComments: true,
-                collapseWhitespace: false,
-                removeAttributeQuotes: false
-            };
-            return args;
+        let htmls = [];
+
+        if (!pages) {
+            htmls.push("html");
+        } else {
+            htmls = Object.keys(pages).map(g => "html-" + g);
+        }
+
+        htmls.forEach(v => {
+            config.plugin(v).tap(args => {
+                if (args[0]) {
+                    args[0].minify = {
+                        removeComments: true,
+                        collapseWhitespace: false,
+                        removeAttributeQuotes: false
+                    };
+                }
+                return args;
+            });
         });
 
     },
@@ -70,8 +122,8 @@ module.exports = {
 
     },
     css: {
-        // 启用 CSS modules
-        modules: false,
+        // // 启用 CSS modules
+        // requireModuleExtension: false,
         // 是否使用css分离插件
         extract: true,
         // 开启 CSS source maps，一般不建议开启
@@ -80,11 +132,11 @@ module.exports = {
         loaderOptions: {
             sass: {
                 //设置css中引用文件的路径，引入通用使用的scss文件（如包含的@mixin）
-                data: `
+                prependData: `
 				$baseUrl: "/";
-                @import '@/assets/styles/common/_var.scss';
-                @import '@/assets/styles/common/_mixin.scss';
-                @import '@/assets/styles/common/_function.scss';
+                @import '~@/assets/styles/common/_var.scss';
+                @import '~@/assets/styles/common/_mixin.scss';
+                @import '~@/assets/styles/common/_function.scss';
 				`
             }
         }

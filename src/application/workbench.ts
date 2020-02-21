@@ -1,20 +1,20 @@
-import flagwind from "flagwind-core";
+import flagwind from "@egova/flagwind-core";
 import WorkbenchBase = flagwind.WorkbenchBase;
 import ApplicationContextBase = flagwind.ApplicationContextBase;
 import ApplicationContext from "@/application/context";
 import Workspace from "@/application/workspace";
 
-import { routes } from "../routes";
-import modules from "@/store";
+// import { routes } from "../routes";
+// import modules from "@/store";
 
 import Vue from "vue";
 import Router from "vue-router";
 import Vuex from "vuex";
 
 // 导入系统组件
-import components from "flagwind-web";
+import components from "@egova/flagwind-web";
 
-import "@egova/flagwind-web/dist/flagwind-web.css";
+// import "@egova/flagwind-web/dist/flagwind-web.css";
 import "@/assets/styles/index.scss";
 import { EventBusMixin } from "./broadcast";
 
@@ -95,7 +95,6 @@ export default class Workbench extends WorkbenchBase {
      * @returns void
      */
     private initializeComponent(context: ApplicationContext): void {
-        console.log(require("@egova/flagwind-web"));
         // 注册系统组件
         Vue.use(components);
     }
@@ -110,7 +109,7 @@ export default class Workbench extends WorkbenchBase {
         Vue.use(Router);
 
         // 初始化路由程序
-        let router = new Router({ routes });
+        let router = new Router(context.routerOptions);
 
         // 设置路由程序
         context.router = router;
@@ -126,9 +125,7 @@ export default class Workbench extends WorkbenchBase {
         Vue.use(Vuex);
 
         // 初始化状态容器
-        let store = new Vuex.Store({
-            modules
-        });
+        let store = new Vuex.Store(context.storeOptions);
 
         // 设置状态容器
         context.store = store;

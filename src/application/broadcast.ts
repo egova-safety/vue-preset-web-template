@@ -77,6 +77,6 @@ export class VueReceiver implements flagwind.IBroadcastReceiver {
         this.method = fn;
     }
     public receive(context: flagwind.BroadcastContext): void {
-        this.method.apply(this.target, context);
+        this.method.apply(this.target, [context.extras]);
     }
 }
