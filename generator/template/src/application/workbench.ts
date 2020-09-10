@@ -10,7 +10,7 @@ import Workspace from "@/application/workspace";
 import Vue from "vue";
 import Router from "vue-router";
 import Vuex from "vuex";
-
+import iView from "view-design";
 // 导入系统组件
 import components from "@egova/flagwind-web";
 
@@ -97,6 +97,7 @@ export default class Workbench extends WorkbenchBase {
     private initializeComponent(context: ApplicationContext): void {
         // 注册系统组件
         Vue.use(components);
+        Vue.use(iView);
     }
 
     /**

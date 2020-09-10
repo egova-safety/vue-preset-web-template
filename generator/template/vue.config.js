@@ -1,54 +1,8 @@
 const path = require('path');
+const isProd = process.env.NODE_ENV === "production";
 
-let pkg = require('./package.json');
-delete pkg.dependencies["vue"];
-delete pkg.dependencies["vue-router"];
-delete pkg.dependencies["vuex"];
-
-delete pkg.dependencies["@egova/flagwind-core"];
-delete pkg.dependencies["@egova/flagwind-web"];
-delete pkg.dependencies["@egova/flagwind-echarts"];
-delete pkg.dependencies["equals"];
-delete pkg.dependencies["lodash.debounce"];
-delete pkg.dependencies["vue-class-component"];
-delete pkg.dependencies["vue-property-decorator"];
-delete pkg.dependencies["view-design"];
-delete pkg.dependencies["echarts"];
-
-
-
-const getPages = () => {
-    let pages = undefined;
-    if (!process.env.PAGE_MODE) {
-        return pages;
-    }
-    if (!process.env.PAGE_JSON) {
-        return pages;
-    }
-
-    pages = require(path.resolve(process.env.PAGE_JSON));
-    if (process.env.PAGE_MODE !== "all") {
-
-        let v = pages[process.env.PAGE_MODE];
-        if (!v) {
-            return pages;
-        }
-        pages = {
-            index: {
-                ...v, ...{
-                    name: "index",
-                    filename: "index.html",
-                    chunks: ["chunk-vendors", "chunk-common", "index"]
-                }
-            }
-        };
-    }
-
-    return pages;
-};
-
-let pages = getPages();
-
+const pageConfig = require('./page.config');
+const pages = pageConfig.pages;
 if (pages) {
     console.log("********多页面配置信息********");
     console.log(pages);
@@ -94,26 +48,7 @@ module.exports = {
 
 
         // 修改插件配置
-        let htmls = [];
-
-        if (!pages) {
-            htmls.push("html");
-        } else {
-            htmls = Object.keys(pages).map(g => "html-" + g);
-        }
-
-        htmls.forEach(v => {
-            config.plugin(v).tap(args => {
-                if (args[0]) {
-                    args[0].minify = {
-                        removeComments: true,
-                        collapseWhitespace: false,
-                        removeAttributeQuotes: false
-                    };
-                }
-                return args;
-            });
-        });
+        pageConfig.plugin(config);
 
     },
     //调整 webpack 配置 https://cli.vuejs.org/zh/guide/webpack.html#%E7%AE%80%E5%8D%95%E7%9A%84%E9%85%8D%E7%BD%AE%E6%96%B9%E5%BC%8F
@@ -125,7 +60,7 @@ module.exports = {
         // // 启用 CSS modules
         // requireModuleExtension: false,
         // 是否使用css分离插件
-        extract: true,
+        extract: isProd,
         // 开启 CSS source maps，一般不建议开启
         sourceMap: false,
         // css预设器配置项
@@ -147,30 +82,12 @@ module.exports = {
         port: 8000, // 端口号
         https: false, // https:{type:Boolean}
         open: true, //配置自动启动浏览器  http://172.16.1.12:7071/rest/mcdPhoneBar/
-        hotOnly: true, // 热更新
+        hot: true, // 热更新
         // proxy: 'http://localhost:8000'   // 配置跨域处理,只有一个代理
     },
 
     // 第三方插件配置 https://www.npmjs.com/package/vue-cli-plugin-style-resources-loader
     pluginOptions: {
-        dll: {
-            inject: true,
-            output: path.resolve(__dirname, "./public/static/dll"),
-            filename: '[name].dll.js',
-            open: process.env.NODE_ENV === 'production',
-            entry: {
-                vue: [
-                    "vue/dist/vue.esm.js",
-                    "vue-router/dist/vue-router.esm.js",
-                    "vuex/dist/vuex.esm.js",
-                ],
-                flagwind: [
-                    "@egova/flagwind-core",
-                    "@egova/flagwind-web",
-                    "@egova/flagwind-echarts"
-                ],
-                vendor: Object.keys(pkg.dependencies)
-            }
-        }
+        dll: require("./dll.config")
     }
 };

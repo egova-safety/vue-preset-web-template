@@ -28,7 +28,7 @@ module.exports = (api, opts) => {
       "compression-webpack-plugin": "^3.1.0",
       "friendly-errors-webpack-plugin": "^1.7.0",
       "raw-loader": "^1.0.0",
-      sass: "^1.25.0",
+      "node-sass": "^4.14.1",
       "sass-loader": "^8.0.2",
       "style-resources-loader": "^1.3.3",
       "tslint-config-flagwind": "^1.0.1",

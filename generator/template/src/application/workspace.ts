@@ -40,7 +40,8 @@ export default class Workspace extends Vue {
 
         // 传入配置进行初始化
         super(options);
-
+        
+        this.$store.dispatch("menu/save", (<any>options?.router)?.options?.routes[0] || {});
         // 保存工作台
         this._workbench = workbench;
     }

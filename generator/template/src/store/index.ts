@@ -1,8 +1,7 @@
-import user from "./modules/user";
+import User from "./modules/user";
 import Menu from "./modules/menu";
-
 const modules = {
-    user,
+    user: new User(),
     menu: new Menu()
 };
 

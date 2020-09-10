@@ -1,27 +1,20 @@
-/*!
- * Authors:
- *      jason <jasonsoop@gmail.com>
- *
- * Licensed under the MIT License.
- * Copyright (C) 2010-2017 Flagwind Inc. All rights reserved.
- */
-
 import * as models from "@/models";
 import { ActionTree, ActionContext } from "vuex";
 import State from "./state";
 
-export function add(store: ActionContext<State, any>, value: { path: string; items: Array<models.IMenuItem> }): void
-{
-    store.commit("ADD", value);
+export function save(store: ActionContext<State, any>, value: Array<any>): void {
+    store.commit("SAVE", value);
 }
 
-export function remove(store: ActionContext<State, any>, path: string): void
-{
-    store.commit("REMOVE", path);
+export function remove(store: ActionContext<State, any>): void {
+    store.commit("REMOVE");
 }
-
+export function hide(store: ActionContext<State, any>): void {
+    store.commit("HIDE");
+}
 export default <ActionTree<State, any>>
-{
-    add,
-    remove
-};
+    {
+        hide,
+        save,
+        remove
+    };

@@ -9,9 +9,14 @@ import { ObjectFactory } from "@/common";
  */
 export default function serviceHandler(
     serviveType: string,
-    option?: { title?: string; dataName?: string; showTip?: boolean }
+    option?: {
+        title?: string;
+        dataName?: string;
+        showTip?: boolean;
+        showErrorMsg?: boolean;
+    }
 ) {
-    return function (target: any, name: any) {
+    return function(target: any, name: any) {
         let method: Function = target[name];
         let handler =
             serviveType === "query"
@@ -24,10 +29,11 @@ export default function serviceHandler(
             ? ObjectFactory.get(serviceName)
             : ObjectFactory.create(target.constructor);
         Object.defineProperty(service, name, {
-            get: function () {
+            get: function() {
                 return handler(service, method, option);
             }
         });
+        
         ObjectFactory.set(serviceName, service);
     };
 }
@@ -35,25 +41,37 @@ class ResponseHandler {
     public static queryHandler(
         service: ServiceBase,
         method: Function,
-        option?: { title?: string; dataName?: string; showTip?: boolean }
+        option?: {
+            title?: string;
+            dataName?: string;
+            showTip?: boolean;
+            showErrorMsg?: boolean;
+        }
     ) {
         return async (...arg: Array<any>) => {
-            let { title = "", dataName = "", showTip = true } = option as any;
+            let {
+                title = "",
+                dataName = "",
+                showTip = false,
+                showErrorMsg = false
+            } = option as any;
             try {
                 let result = await method.call(service, ...arg);
                 let msg: string;
                 if (result.hasError) {
                     msg = title ? `${title}出错!` : "请求服务失败";
-                    showTip && ResponseHandler.message.error(msg);
+                    msg = showErrorMsg ? result.message : msg;
+                    (showTip || showErrorMsg) &&
+                        ResponseHandler.message.error(msg);
                     console.error(msg);
-                    return null;
+                    return result;
                 }
-                let data = dataName ? result[dataName] : result;
+                let data = (dataName ? result[dataName] : result) || "";
                 if (
                     !data ||
                     (data.$isObject() && data.$isEmpty()) ||
                     (data.$isArray() && data.$isEmpty()) ||
-                    (dataName === "" && result.result.$isEmpty())
+                    (dataName === "" && (result.result || []).$isEmpty())
                 ) {
                     msg = `${title}无结果!`;
                     showTip && ResponseHandler.message.warning(msg);
@@ -62,7 +80,8 @@ class ResponseHandler {
                 return data;
             } catch (error) {
                 let msg = title ? `${title}出错!` : "请求服务失败";
-                showTip && ResponseHandler.message.error(msg);
+                msg = showErrorMsg ? error.response?.data?.message || msg : msg;
+                (showTip || showErrorMsg) && ResponseHandler.message.error(msg);
                 console.error(msg, error);
             }
         };
@@ -70,16 +89,28 @@ class ResponseHandler {
     public static saveHandler(
         service: ServiceBase,
         method: Function,
-        option?: { title?: string; dataName?: string; showTip?: boolean }
+        option?: {
+            title?: string;
+            dataName?: string;
+            showTip?: boolean;
+            showErrorMsg?: boolean;
+        }
     ) {
-        let { title = "", dataName = "", showTip = true } = option as any;
+        let {
+            title = "",
+            dataName = "",
+            showTip = false,
+            showErrorMsg = false
+        } = option as any;
         return async (...arg: Array<any>) => {
             try {
-                let result = await method.call(service, ...arg);
+                let result = await method.call(this || service, ...arg);
                 let msg: string;
                 if (result.hasError) {
                     msg = title ? `${title}出错!` : "请求服务失败";
-                    showTip && ResponseHandler.message.error(msg);
+                    msg = showErrorMsg ? result.message : msg;
+                    (showTip || showErrorMsg) &&
+                        ResponseHandler.message.error(msg);
                     console.error(msg);
                     return result;
                 }
@@ -89,7 +120,8 @@ class ResponseHandler {
                 return data;
             } catch (error) {
                 let msg = title ? `${title}出错!` : "请求服务失败";
-                showTip && ResponseHandler.message.error(msg);
+                msg = showErrorMsg ? error.response?.data?.message || msg : msg;
+                (showTip || showErrorMsg) && ResponseHandler.message.error(msg);
                 console.error(msg, error);
             }
         };
